@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) || exit;
 
 /**
  * Load all translations for our plugin from the MO file.
-*/
+ */
 function building_blocks_load_textdomain() {
 
 	load_plugin_textdomain( 'building-blocks', false, basename( __DIR__ ) . '/languages' );
@@ -81,3 +81,11 @@ function building_blocks_register_block() {
 
 }
 add_action( 'init', 'building_blocks_register_block' );
+
+add_filter( 'render_block', 'building_blocks_show_block_type', 10, 2 );
+function building_blocks_show_block_type( $block_content, $block ) {
+	if ( true === WP_DEBUG ) {
+		$block_content = "<h5 style=\"color:salmon\">{$block['blockName']}</h5><div class='wp-block' data-blockType='{$block['blockName']}'>{$block_content}</div>";
+	}
+	return '<xmp style="white-space:pre-wrap;">' . $block_content . '</xmp>' . $block['blockName'] . '<br>' . $block_content;
+}
