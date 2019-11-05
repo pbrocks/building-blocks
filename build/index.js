@@ -250,6 +250,17 @@ module.exports = _typeof;
 
 /***/ }),
 
+/***/ "./src/block.json":
+/*!************************!*\
+  !*** ./src/block.json ***!
+  \************************/
+/*! exports provided: name, category, attributes, default */
+/***/ (function(module) {
+
+module.exports = {"name":"building-blocks/author","category":"common","attributes":{"name":{"type":"string","selector":".wp-block-building-blocks-author__name"},"biography":{"type":"array","source":"children","selector":".wp-block-building-blocks-author__biography"},"mediaID":{"type":"number"},"mediaURL":{"type":"string","source":"attribute","selector":"img","attribute":"src"}}};
+
+/***/ }),
+
 /***/ "./src/edit.js":
 /*!*********************!*\
   !*** ./src/edit.js ***!
@@ -271,6 +282,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_8__);
 
 
 
@@ -281,6 +298,9 @@ __webpack_require__.r(__webpack_exports__);
 /**
  * WordPress dependencies
  */
+
+
+
 
 /**
  * Edit Function
@@ -300,10 +320,72 @@ function (_Component) {
   _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default()(AuthorEdit, [{
     key: "render",
     value: function render() {
-      var className = this.props.className;
+      var _this$props = this.props,
+          className = _this$props.className,
+          attributes = _this$props.attributes,
+          setAttributes = _this$props.setAttributes;
+      var name = attributes.name,
+          biography = attributes.biography,
+          mediaURL = attributes.mediaURL,
+          mediaID = attributes.mediaID;
+
+      var onSelectImage = function onSelectImage(media) {
+        setAttributes({
+          mediaURL: media.url,
+          mediaID: media.id
+        });
+      };
+
       return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_5__["createElement"])("div", {
         className: className
-      }, "Hello World, (from the editor)");
+      }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_5__["createElement"])("figure", {
+        className: "wp-block-building-blocks-author__avatar"
+      }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_5__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_7__["MediaUploadCheck"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_5__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_7__["MediaUpload"], {
+        onSelect: onSelectImage,
+        allowedTypes: "image",
+        value: mediaID,
+        render: function render(_ref) {
+          var open = _ref.open;
+          return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_5__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_8__["Button"], {
+            onClick: open
+          }, !mediaID ? Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_5__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_8__["Dashicon"], {
+            icon: "format-image"
+          }) : Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_5__["createElement"])("img", {
+            className: "wp-block-building-blocks-author__avatar-img",
+            src: mediaURL,
+            alt: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__["__"])('Upload Avatar', 'building-blocks')
+          }));
+        }
+      }))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_5__["createElement"])("div", {
+        className: "wp-block-building-blocks-author__content"
+      }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_5__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_7__["RichText"], {
+        identifier: "name",
+        tagName: "span",
+        className: "wp-block-building-blocks-author__name",
+        multiline: false,
+        onChange: function onChange(nextName) {
+          setAttributes({
+            name: nextName
+          });
+        },
+        value: name,
+        placeholder: // translators: placeholder text used for the quote
+        Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__["__"])('Write author name…', 'building-blocks'),
+        keepPlaceholderOnFocus: true
+      }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_5__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_7__["RichText"], {
+        identifier: "biography",
+        tagName: "span",
+        className: "wp-block-building-blocks-author__biography",
+        onChange: function onChange(nextBiography) {
+          setAttributes({
+            biography: nextBiography
+          });
+        },
+        value: biography,
+        placeholder: // translators: placeholder text used for the quote
+        Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__["__"])('Write author biography…', 'building-blocks'),
+        keepPlaceholderOnFocus: true
+      })));
     }
   }]);
 
@@ -357,13 +439,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./edit */ "./src/edit.js");
 /* harmony import */ var _save__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./save */ "./src/save.js");
 /* harmony import */ var _icon__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./icon */ "./src/icon.js");
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
-/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _block_json__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./block.json */ "./src/block.json");
+var _block_json__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__PURE__*/Object.assign({}, _block_json__WEBPACK_IMPORTED_MODULE_3__, {"default": _block_json__WEBPACK_IMPORTED_MODULE_3__});
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
+/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_5__);
 /**
  * Internal dependencies
  */
+
 
 
 
@@ -377,12 +462,16 @@ __webpack_require__.r(__webpack_exports__);
  * Block Registration
  */
 
-Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_4__["registerBlockType"])('building-blocks/author', {
-  title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__["__"])('Building Blocks (Author)', 'building-blocks'),
-  description: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__["__"])('Add an author biography to build credibility and authority.', 'building-blocks'),
+var name = _block_json__WEBPACK_IMPORTED_MODULE_3__.name,
+    category = _block_json__WEBPACK_IMPORTED_MODULE_3__.category,
+    attributes = _block_json__WEBPACK_IMPORTED_MODULE_3__.attributes;
+Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_5__["registerBlockType"])(name, {
+  title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])('Building Blocks (Author)', 'building-blocks'),
+  description: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])('Add an author biography to build credibility and authority.', 'building-blocks'),
   icon: _icon__WEBPACK_IMPORTED_MODULE_2__["default"],
-  category: 'common',
+  category: category,
   example: {},
+  attributes: attributes,
   edit: _edit__WEBPACK_IMPORTED_MODULE_0__["default"],
   save: _save__WEBPACK_IMPORTED_MODULE_1__["default"]
 });
@@ -400,19 +489,54 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_4__["registerBlockType"])('bui
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__);
 
+
+/**
+ * WordPress dependencies
+ */
 
 /**
  * Save Function
  */
+
 var save = function save(_ref) {
-  var className = _ref.className;
+  var className = _ref.className,
+      attributes = _ref.attributes;
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     className: className
-  }, "Hello World, (from the frontend)");
+  }, attributes.mediaID && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("figure", {
+    className: "wp-block-building-blocks-author__avatar"
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("img", {
+    className: "wp-block-building-blocks-author__avatar-img",
+    src: attributes.mediaURL,
+    alt: ""
+  })), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
+    className: "wp-block-building-blocks-author__content"
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__["RichText"].Content, {
+    tagName: "span",
+    className: "wp-block-building-blocks-author__name",
+    value: attributes.name
+  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__["RichText"].Content, {
+    tagName: "span",
+    className: "wp-block-building-blocks-author__biography",
+    value: attributes.biography
+  })));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (save);
+
+/***/ }),
+
+/***/ "@wordpress/block-editor":
+/*!**********************************************!*\
+  !*** external {"this":["wp","blockEditor"]} ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+(function() { module.exports = this["wp"]["blockEditor"]; }());
 
 /***/ }),
 
