@@ -42,3 +42,48 @@ img.wp-block-building-blocks-author__avatar-img {
 	margin: auto;
 	z-index: 1;
 }
+
+/**
+ * Note that these styles are loaded *after* common styles, meaning
+ * these editor-specific styles using the same selectors will take precedence.
+ */
+
+ img.wp-block-building-blocks-template__avatar-img {
+	height: 100%;
+}
+
+.wp-block-building-blocks-template__avatar {
+	background: #ffffff;
+	position: relative;
+}
+
+.wp-block-building-blocks-template__avatar button {
+	border-radius: 100%;
+	height: 100%;
+	left: 0;
+	padding: 0;
+	position: absolute;
+	width: 100%;
+}
+
+.wp-block-building-blocks-template__avatar button:focus:not(:disabled) {
+	background: none;
+	border: none;
+	box-shadow: 0 0 0 2px #007cba;
+	outline: none;
+}
+
+.wp-block-building-blocks-template__avatar button svg {
+	fill: #555d66;
+	margin: auto;
+	pointer-events: none;
+}
+
+.is-style-square .wp-block-building-blocks-template__avatar button {
+	border-radius: 0;
+}
+
+.wp-block-building-blocks-template__avatar .components-spinner {
+	margin: auto;
+	z-index: 1;
+}

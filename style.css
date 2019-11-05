@@ -51,3 +51,56 @@
 .is-style-square .wp-block-building-blocks-author__avatar-img {
 	border-radius: 0;
 }
+/**
+ * Note that these styles are loaded before editor styles, meaning
+ * editor-specific styles using these same selectors will take precedence.
+ */
+
+ .wp-block-building-blocks-template {
+	align-items: flex-start;
+	background: #f2f2f2;
+	display: flex;
+	padding: 2em;
+	position: relative;
+}
+
+.wp-block-building-blocks-template__avatar {
+	border-radius: 100%;
+	flex: 0 0 auto;
+	height: 6em;
+	margin: 0 2em 0 0;
+	position: relative;
+	width: 6em;
+}
+
+.wp-block-building-blocks-template__avatar-img {
+	background: #aaa;
+	border-radius: 100%;
+	display: inline-block;
+	height: 100%;
+	object-fit: cover;
+	position: absolute;
+	top: 0;
+	vertical-align: middle;
+	width: 100%;
+}
+
+.wp-block-building-blocks-template__content {
+	flex: 1 1 auto;
+}
+
+.wp-block-building-blocks-template__name {
+	display: block;
+	font-size: 1.5em;
+	margin: 0;
+	padding: 0;
+}
+
+.wp-block-building-blocks-template__biography {
+	margin: 0 0 1em;
+}
+
+.is-style-square .wp-block-building-blocks-template__avatar,
+.is-style-square .wp-block-building-blocks-template__avatar-img {
+	border-radius: 0;
+}

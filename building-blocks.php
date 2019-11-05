@@ -9,83 +9,87 @@
  * @package building-blocks
  */
 
-defined( 'ABSPATH' ) || exit;
+defined('ABSPATH') || exit;
 
 /**
  * Load all translations for our plugin from the MO file.
  */
-function building_blocks_load_textdomain() {
+function building_blocks_load_textdomain()
+{
 
-	load_plugin_textdomain( 'building-blocks', false, basename( __DIR__ ) . '/languages' );
+    load_plugin_textdomain('building-blocks', false, basename(__DIR__) . '/languages');
 
 }
-add_action( 'init', 'building_blocks_load_textdomain' );
+add_action('init', 'building_blocks_load_textdomain');
 
 /**
  * Registers all block assets so that they can be enqueued.
+ * wp-plugins, wp-edit-post, and wp-element 
  */
-function building_blocks_register_block() {
+function building_blocks_register_block()
+{
 
-	// Gutenberg is not active.
-	if ( ! function_exists( 'register_block_type' ) ) {
+    // Gutenberg is not active.
+    if (! function_exists('register_block_type') ) {
 
-		return;
+        return;
 
-	}
+    }
 
-	// automatically load dependencies and version
-	$asset_file = include( plugin_dir_path( __FILE__ ) . 'build/index.asset.php' );
+    // automatically load dependencies and version
+    $asset_file = include plugin_dir_path(__FILE__) . 'build/index.asset.php';
 
-	// Block Javascript
-	wp_register_script(
-		'building-blocks',
-		plugins_url( 'build/index.js', __FILE__ ),
-		$asset_file['dependencies'],
-		$asset_file['version']
-	);
+    // Block Javascript
+    wp_register_script(
+        'building-blocks',
+        plugins_url('build/index.js', __FILE__),
+        $asset_file['dependencies'],
+        $asset_file['version']
+    );
 
-	// Editor Styling
-	wp_register_style(
-		'building-blocks-editor',
-		plugins_url( 'editor.css', __FILE__ ),
-		array( 'wp-edit-blocks' ),
-		filemtime( plugin_dir_path( __FILE__ ) . 'editor.css' )
-	);
+    // Editor Styling
+    wp_register_style(
+        'building-blocks-editor',
+        plugins_url('editor.css', __FILE__),
+        array( 'wp-edit-blocks' ),
+        filemtime(plugin_dir_path(__FILE__) . 'editor.css')
+    );
 
-	// Frontend Styling
-	wp_register_style(
-		'building-blocks-frontend',
-		plugins_url( 'style.css', __FILE__ ),
-		array(),
-		filemtime( plugin_dir_path( __FILE__ ) . 'style.css' )
-	);
+    // Frontend Styling
+    wp_register_style(
+        'building-blocks-frontend',
+        plugins_url('style.css', __FILE__),
+        array(),
+        filemtime(plugin_dir_path(__FILE__) . 'style.css')
+    );
 
-	// Register block
-	register_block_type(
-		'building-blocks/author',
-		array(
-			'editor_script' => 'building-blocks',
-			'style'         => 'building-blocks-frontend',
-			'editor_style'  => 'building-blocks-editor',
-		)
-	);
+    // Register block
+    register_block_type(
+        'building-blocks/author',
+        array(
+        'editor_script' => 'building-blocks',
+        'style'         => 'building-blocks-frontend',
+        'editor_style'  => 'building-blocks-editor',
+        )
+    );
 
-	if ( function_exists( 'wp_set_script_translations' ) ) {
-		/**
-		 * May be extended to wp_set_script_translations( 'my-handle', 'my-domain',
-		 * plugin_dir_path( MY_PLUGIN ) . 'languages' ) ). For details see
-		 * https://make.wordpress.org/core/2018/11/09/new-javascript-i18n-support-in-wordpress/
-		 */
-		wp_set_script_translations( 'building-blocks', 'building-blocks' );
-	}
+    if (function_exists('wp_set_script_translations') ) {
+        /**
+         * May be extended to wp_set_script_translations( 'my-handle', 'my-domain',
+         * plugin_dir_path( MY_PLUGIN ) . 'languages' ) ). For details see
+         * https://make.wordpress.org/core/2018/11/09/new-javascript-i18n-support-in-wordpress/
+         */
+        wp_set_script_translations('building-blocks', 'building-blocks');
+    }
 
 }
-add_action( 'init', 'building_blocks_register_block' );
+add_action('init', 'building_blocks_register_block');
 
-add_filter( 'render_block', 'building_blocks_show_block_type', 10, 2 );
-function building_blocks_show_block_type( $block_content, $block ) {
-	if ( true === WP_DEBUG ) {
-		$block_content = "<h5 style=\"color:salmon\">{$block['blockName']}</h5><div class='wp-block' data-blockType='{$block['blockName']}'>{$block_content}</div>";
-	}
-	return '<xmp style="white-space:pre-wrap;">' . $block_content . '</xmp>' . $block['blockName'] . '<br>' . $block_content;
+add_filter('render_block', 'building_blocks_show_block_type', 10, 2);
+function building_blocks_show_block_type( $block_content, $block )
+{
+    if (true === WP_DEBUG ) {
+        $block_content = "<h5 style=\"color:salmon\">{$block['blockName']}</h5><div class='wp-block' data-blockType='{$block['blockName']}'>{$block_content}</div>";
+    }
+    return '<xmp style="white-space:pre-wrap;">' . $block_content . '</xmp>' . $block['blockName'] . '<br>' . $block_content;
 }

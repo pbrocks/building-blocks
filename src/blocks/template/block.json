@@ -1,0 +1,30 @@
+{
+	"name": "building-blocks/template",
+	"category": "common",
+	"attributes": {
+		"name": {
+			"type": "string",
+			"selector": ".wp-block-building-blocks-template__name"
+		},
+		"biography": {
+			"type": "array",
+			"source": "children",
+			"selector": ".wp-block-building-blocks-template__biography"
+		},
+		"mediaID": {
+			"type": "number"
+		},
+		"mediaURL": {
+			"type": "string",
+			"source": "attribute",
+			"selector": "img",
+			"attribute": "src"
+		},
+		"mediaALT": {
+			"type": "string",
+			"source": "attribute",
+			"selector": "img",
+			"attribute": "alt"
+		}
+	}
+}
