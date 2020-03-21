@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) || exit;
 
 /**
  * Load all translations for our plugin from the MO file.
-*/
+ */
 function building_blocks_load_textdomain() {
 
 	load_plugin_textdomain( 'building-blocks', false, basename( __DIR__ ) . '/languages' );
@@ -34,7 +34,7 @@ function building_blocks_register_block() {
 	}
 
 	// automatically load dependencies and version
-	$asset_file = include( plugin_dir_path( __FILE__ ) . 'build/index.asset.php' );
+	$asset_file = include plugin_dir_path( __FILE__ ) . 'build/index.asset.php';
 
 	// Block Javascript
 	wp_register_script(
@@ -81,3 +81,34 @@ function building_blocks_register_block() {
 
 }
 add_action( 'init', 'building_blocks_register_block' );
+
+/**
+ * Adding a block category creates a Panel
+ */
+function create_building_blocks_panel( $categories, $post ) {
+	return array_merge(
+		$categories,
+		array(
+			array(
+				'slug'  => 'building-blocks',
+				'title' => __( 'Building Blocks Panel', 'building-blocks' ),
+			),
+		)
+	);
+}
+add_filter( 'block_categories', 'create_building_blocks_panel', 10, 2 );
+
+add_filter( 'render_block', 'building_blocks_show_block_type', 10, 2 );
+function building_blocks_show_block_type( $block_content, $block ) {
+	// if ( true === WP_DEBUG ) {
+		$block_content = "<div class='wp-block' data-blockType='{$block['blockName']}'>{$block_content}</div><h5 style=\"color:salmon\">{$block['blockName']}</h5>";
+	// }
+	return $block_content;
+}
+add_filter( 'render_block', 'show_the_block_constituents', 10, 2 );
+function show_the_block_constituents( $block_content, $block ) {
+	// if ( true === WP_DEBUG && current_user_can( 'administrator' ) ) {
+		$block_content = "<br /><div class='wp-block' data-blockType='{$block['blockName']}' style='clear:both;'>{$block_content}</div>" . ( 'string' === gettype( $block['blockName'] ) ? '<pre><xmp> $block_content = ' . gettype( $block_content ) . " {$block['blockName']} " . print_r( $block, true ) . '</xmp></pre>' : '' );
+	// }
+	return $block_content;
+}

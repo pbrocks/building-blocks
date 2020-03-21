@@ -1,6 +1,6 @@
 {
 	"name": "building-blocks/author",
-	"category": "common",
+	"category": "building-blocks",
 	"attributes": {
 		"name": {
 			"type": "string",
